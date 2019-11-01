@@ -5,8 +5,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import java.util.Collections;
 
 public class PancakeView extends SurfaceView implements Runnable {
     // This is our thread
@@ -58,10 +61,11 @@ public class PancakeView extends SurfaceView implements Runnable {
 
         setupAndRestart();
 
+
     }
     public void setupAndRestart(){
 
-        mTower.reset(4,mScreenX,mScreenY);
+        mTower.reset();
 
     }
 
@@ -118,6 +122,7 @@ public class PancakeView extends SurfaceView implements Runnable {
             //Draw tower
 
             for(Pancake p: mTower.getTower()){
+
                 mCanvas.drawRect(p.getRectF(), mPaint);
             }
 
@@ -144,5 +149,31 @@ public class PancakeView extends SurfaceView implements Runnable {
         mPlaying = true;
         mGameThread = new Thread(this);
         mGameThread.start();
+    }
+
+    // The SurfaceView class implements onTouchListener
+// So we can override this method and detect screen touches.
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent) {
+
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+
+            // Player has touched the screen
+            case MotionEvent.ACTION_DOWN:
+
+                mPaused = false;
+                for(Pancake p: mTower.getTower()){
+                    boolean b= p.getRectF().contains(motionEvent.getX(),motionEvent.getY());
+                    if(b){
+                        mTower.flip(p);
+                    }
+                }
+
+
+                break;
+
+
+        }
+        return true;
     }
 }
