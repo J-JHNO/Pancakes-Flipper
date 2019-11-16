@@ -29,13 +29,12 @@ public class SQLite : MonoBehaviour
 		IDbCommand cmnd = dbcon.CreateCommand();
 		cmnd.CommandText = "INSERT INTO my_table (id, val) VALUES (0, 5)";
 		cmnd.ExecuteNonQuery();
-
+        
 		
     }
 
-    // Update is called once per frame
-    void Update()
+    public void dbConnexion()
     {
-        
+
     }
 }

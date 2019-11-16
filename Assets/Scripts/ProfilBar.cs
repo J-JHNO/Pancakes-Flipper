@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ProfilBar : MonoBehaviour {
     public GUISkin labelSkin;
+    private string pseudo;
+    private int coins;
 
     // Use this for initialization
     void Start () {
