@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using System.Data;
 using Mono.Data.Sqlite;
 using player;
+using DataBank;
 
 public class LogIn : MonoBehaviour {
-
+	private SQLiteHelper helper;
 	// Use this for initialization
 	void Start () {
-		
+		helper=new SQLiteHelper();
+		helper.createPlayerTable();
+		helper.seePlayerTable();
 	}
 	
 	// Update is called once per frame
@@ -50,7 +53,14 @@ public class LogIn : MonoBehaviour {
         if (check())
         {
             //((player.Player)gameObject.GetComponent<player.Player>()).build("blabla");
-
+			if(helper.playerExists(userName)){
+				helper.addPlayer(userName);
+			}
+			else{
+				Debug.Log(userName+"Already exists");
+			}
+			helper.seePlayerTable();
+			
             //player.Player.build("vlavla");
             //player.Player.getInstance();
             //System.Console.Write(player.Player.getName());
