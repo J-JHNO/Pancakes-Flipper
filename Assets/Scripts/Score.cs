@@ -12,7 +12,7 @@ public class Score : MonoBehaviour
 
     void Start()
     {
-        labelSkin = Resources.Load<GUISkin>("GUI_skin/Pancake_skin/Gui_skin_Pancake");
+        labelSkin = Resources.Load<GUISkin>("GUI_skin/Pancake_skin/Gui_skin_Pancake2");
     }
 
     void Awake()
@@ -36,7 +36,7 @@ public class Score : MonoBehaviour
 
         // GUILayout.Label("FLIPS = " + flips.ToString(), labelSkin.GetStyle("Pancake_style"));
 
-        GUI.Label(new Rect(40, 40, width * 1.75f, height * 0.5f),"FLIPS = " + flips.ToString(), labelSkin.GetStyle("Pancake_style"));
+        GUI.Label(new Rect(40, 40, width * 1.75f, height * 0.5f),"Flips = " + flips.ToString(), labelSkin.GetStyle("Pancake_style_2"));
     }
 
 }

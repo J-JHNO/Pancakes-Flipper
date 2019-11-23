@@ -3,35 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace player
+public class Player : MonoBehaviour
 {
-    public class Player : MonoBehaviour
+    private string playerName;
+    private static Player instance = null;
+
+    public Player()
     {
-        private string playerName;
-        private static Player instance = null;
+        playerName = "Player";
+    }
+    
 
-        private Player(string pseudo)
+    public void Start()
+    {
+        if (instance == null)
         {
-            playerName = pseudo;
+            instance = this;
         }
+        
+    }
 
-        public static Player build(string pseudo)
-        {
-            if (instance == null)
-            {
-                instance = new Player(pseudo);
-            }
-            return instance;
-        }
+    public static string getName()
+    {
+        return instance.playerName;
+    }
 
-        public static Player getInstance()
-        {
-            return instance;
-        }
-
-        public static string getName()
-        {
-            return instance.playerName;
-        }
+    public static void setName(string p)
+    {
+        instance.playerName = p;
     }
 }
+

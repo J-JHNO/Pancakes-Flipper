@@ -1,34 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 using UnityEngine.UI;
-using System.Data;
-using Mono.Data.Sqlite;
-using player;
+using UnityEngine.SceneManagement;
+using DataBank;
 
 public class LogIn : MonoBehaviour {
+    private SQLiteHelper helper;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+        Transform parent = gameObject.transform.parent;
+        Transform waitingText = ((Transform)parent.transform.Find("Waiting"));
+        waitingText.gameObject.SetActive(false);
+
+        helper = new SQLiteHelper();
+        //helper.createPlayerTable();
+        helper.seePlayerTable();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+    }
 
     public bool check()
     {
-        string userName = gameObject.transform.FindChild("User name").GetComponent<Text>().text;
-        if (userName.Contains("3"))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        //helper.open();
+        string userName = gameObject.transform.Find("User name").GetComponent<Text>().text;
+       // Debug.Log("test : " + userName);
+        bool r = !helper.playerExists(userName);
+       // helper.close();
+        return r;
     }
 
     public void correct()
@@ -46,16 +49,42 @@ public class LogIn : MonoBehaviour {
 
     public void validation()
     {
-        string userName = gameObject.transform.FindChild("User name").GetComponent<Text>().text;
+       // helper.open();
+        string userName = gameObject.transform.Find("User name").GetComponent<Text>().text;
         if (check())
         {
-            //((player.Player)gameObject.GetComponent<player.Player>()).build("blabla");
-
-            //player.Player.build("vlavla");
-            //player.Player.getInstance();
-            //System.Console.Write(player.Player.getName());
-            //Debug.Log("test");
-            
+            helper.addPlayer(userName);
         }
+        else
+        {
+            Debug.Log(userName + "Already exists");
+        }
+        //helper.seePlayerTable();
+        //helper.close();
+
+         Player.setName(userName);
+
+
+
+
+
+        
+        Transform intro = (gameObject.transform.parent).Find("Introduction");
+        intro.GetComponent<Text>().text = "Welcome " + Player.getName();
+
+        gameObject.SetActive(false);
+
+        Transform parent = gameObject.transform.parent;
+        Transform waitingText = ((Transform)parent.transform.Find("Waiting"));
+        waitingText.gameObject.SetActive(true);
+
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Home");
+        LoadingScreen.Instance.Show(asyncLoad);
+
+
+
+
+
     }
 }

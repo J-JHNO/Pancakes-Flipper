@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using player;
+using DataBank;
 
 public class Shop : MonoBehaviour {
     private string packName;
     private string packPrice;
+    private static string packValue;
 
-	// Use this for initialization
-	void Start () {
-        player.Player.getInstance();
-        System.Console.Write(player.Player.getName());
-	}
+    private SQLiteHelper helper;
+
+    // Use this for initialization
+    void Start () {
+        helper = new SQLiteHelper();
+        //helper.createPlayerTable();
+        helper.seePlayerTable();
+
+        Debug.Log(helper.getTotalPlayerFlips(Player.getName()));
+
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,17 +30,18 @@ public class Shop : MonoBehaviour {
     public void getPack()
     {
         Transform parent = gameObject.transform.parent;
-        packName = ((Text)parent.transform.FindChild("Name").GetComponent<Text>()).text;
-        packPrice = ((Text)parent.transform.FindChild("Price").GetComponent<Text>()).text;
+        packName = ((Text)parent.transform.Find("Name").GetComponent<Text>()).text;
+        packPrice = ((Text)parent.transform.Find("Price").GetComponent<Text>()).text;
+        packValue = ((Text)parent.transform.Find("Intern Panel").Find("Value").GetComponent<Text>()).text;
 
         bool isOnPurchase = ((PurchaseAnim)GameObject.FindGameObjectWithTag("Purchase").GetComponent("PurchaseAnim")).isOnPurchase;
 
         if (!isOnPurchase)
         {
-            Transform textPackPurchase = GameObject.FindGameObjectWithTag("Purchase").transform.FindChild("Pack name");
+            Transform textPackPurchase = GameObject.FindGameObjectWithTag("Purchase").transform.Find("Pack name");
             textPackPurchase.GetComponent<Text>().text = "Pack " + packName;
 
-            Transform textPackPrice = GameObject.FindGameObjectWithTag("Purchase").transform.FindChild("Price");
+            Transform textPackPrice = GameObject.FindGameObjectWithTag("Purchase").transform.Find("Price");
             textPackPrice.GetComponent<Text>().text = packPrice;
 
             ((PurchaseAnim)GameObject.FindGameObjectWithTag("Purchase").GetComponent("PurchaseAnim")).Play();
@@ -57,5 +66,29 @@ public class Shop : MonoBehaviour {
     private IEnumerator Wait()
     {
         yield return new WaitForSeconds(20);
+    }
+
+    public void Purchase()
+    {
+        bool isOnPurchase = ((PurchaseAnim)GameObject.FindGameObjectWithTag("Purchase").GetComponent("PurchaseAnim")).isOnPurchase;
+
+        if (isOnPurchase)
+        {
+            Transform parentPanel = gameObject.transform.parent.parent.parent;
+            Text t = parentPanel.Find("Header").Find("PancakeCoins").Find("Value").GetComponent<Text>();
+            int now;
+            System.Int32.TryParse(packValue, out now);
+            //t.text = ((before + now).ToString());
+
+
+            int flips = helper.getTotalPlayerFlips(Player.getName());
+            flips += (now);
+            helper.updatePlayer(Player.getName(), flips);
+
+            t.text = helper.getTotalPlayerFlips(Player.getName()).ToString();
+
+          
+            
+        }
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Tower
   - VictoryMessage
   - PlayButton
+  - Purchase
   layers:
   - Default
   - TransparentFX

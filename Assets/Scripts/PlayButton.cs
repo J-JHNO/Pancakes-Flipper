@@ -24,5 +24,10 @@ public class PlayButton : MonoBehaviour {
     {
         SceneManager.LoadScene("GameMenu");
     }
+
+    public void Shop()
+    {
+        SceneManager.LoadScene("Shop");
+    }
     
 }
