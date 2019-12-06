@@ -9,6 +9,7 @@ TagManager:
   - VictoryMessage
   - PlayButton
   - Purchase
+  - Friend
   layers:
   - Default
   - TransparentFX

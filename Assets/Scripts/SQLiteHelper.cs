@@ -109,13 +109,13 @@ namespace DataBank
 
         // ADDING BY OURSELVES
         public void createPlayerTable()
-
         {
 			IDbCommand dbcmd = db_connection.CreateCommand();
             dbcmd.CommandText =
-                "CREATE TABLE IF NOT EXISTS player (id INTEGER PRIMARY KEY, username TEXT, pancakes_flipped INTEGER ) " ;
+                "CREATE TABLE IF NOT EXISTS player (id INTEGER PRIMARY KEY, username TEXT NOT NULL, pancakes_flipped INTEGER DEFAULT 0) " ;
             IDataReader reader = dbcmd.ExecuteReader();
-
+            reader.Dispose();
+            reader.Close();
         }
 		public void seePlayerTable()
         {
@@ -132,7 +132,13 @@ namespace DataBank
             reader.Close();
 
         }
-	
+		/*public void createLevelTable()
+        {
+			IDbCommand dbcmd = db_connection.CreateCommand();
+            dbcmd.CommandText =
+                "CREATE TABLE IF NOT EXISTS level (id INTEGER PRIMARY KEY, level_number INTEGER, flips INTEGER, FOREIGN KEY(player_id) REFERENCES player(id)) " ;
+            IDataReader reader = dbcmd.ExecuteReader();
+        }*/
 		
 		public void addPlayer(String username){
 			IDbCommand dbcmd = db_connection.CreateCommand();
@@ -175,33 +181,6 @@ namespace DataBank
 			IDbCommand dbcmd = db_connection.CreateCommand();
             dbcmd.CommandText =
                 "SELECT pancakes_flipped FROM player WHERE username='"+username+"'"  ;
-                "INSERT INTO player (username,pancakes_flipped)  VALUES ("+username+",0)";
-            IDataReader reader = dbcmd.ExecuteReader();
-			
-		}
-		public void updatePlayer(String username, int flips){
-			IDbCommand dbcmd = db_connection.CreateCommand();
-            dbcmd.CommandText =
-                "UPDATE player SET pancakes_flipped = "+flips+" WHERE username="+username+"";
-            IDataReader reader = dbcmd.ExecuteReader();
-			
-		}
-		public bool playerExists(String username){
-			IDbCommand dbcmd = db_connection.CreateCommand();
-            dbcmd.CommandText =
-                "SELECT * FROM player WHERE username="+username+"";
-            IDataReader reader = dbcmd.ExecuteReader();
-			if(reader.Read()){
-				return true;
-			}
-			else{
-				return false;
-			}
-		}
-		public int getTotalPlayerFlips(String username){
-			IDbCommand dbcmd = db_connection.CreateCommand();
-            dbcmd.CommandText =
-                "SELECT pancakes_flipped FROM player WHERE username="+username+""  ;
             IDataReader reader = dbcmd.ExecuteReader();
 			reader.Read();
 			
@@ -212,9 +191,9 @@ namespace DataBank
 			int c = reader.GetInt32(0);
             reader.Dispose();
             reader.Close();
-			return reader.GetInt32(0);
+            return c;
 
-		}
+        }
 		/*public void getPlayerFlips(String username,int level){
 			IDbCommand dbcmd = db_connection.CreateCommand();
             dbcmd.CommandText =

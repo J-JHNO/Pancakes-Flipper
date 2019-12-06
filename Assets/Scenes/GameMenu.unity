@@ -2726,7 +2726,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 236045929}
   m_HandleRect: {fileID: 236045928}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 0.00000007470642
   m_Size: 0.5654255
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3299,7 +3299,7 @@ GameObject:
   - component: {fileID: 744802032}
   - component: {fileID: 744802031}
   m_Layer: 0
-  m_Name: shop
+  m_Name: back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3355,7 +3355,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shop
+  m_Text: Back
 --- !u!222 &744802032
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4065,7 +4065,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -531.5, y: 781.5001}
+  m_AnchoredPosition: {x: -531.50006, y: 781.5}
   m_SizeDelta: {x: 1880, y: 2720}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1046794133
@@ -4482,7 +4482,7 @@ GameObject:
   - component: {fileID: 1194550279}
   - component: {fileID: 1194550278}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4559,7 +4559,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1194550278}
-        m_MethodName: Shop
+        m_MethodName: Home
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -1,19 +1,24 @@
 ﻿
 using UnityEngine;
 using UnityEngine.UI;
-using System.Data;
-using Mono.Data.Sqlite;
-using player;
+using UnityEngine.SceneManagement;
 using DataBank;
 
 public class LogIn : MonoBehaviour {
-	private SQLiteHelper helper;
-	// Use this for initialization
-	void Start () {
-		helper=new SQLiteHelper();
-		helper.createPlayerTable();
-		helper.seePlayerTable();
-	}
+    private SQLiteHelper helper;
+
+    // Use this for initialization
+    void Start()
+    {
+        Transform parent = gameObject.transform.parent;
+        Transform waitingText = ((Transform)parent.transform.Find("Waiting"));
+        waitingText.gameObject.SetActive(false);
+
+        helper = new SQLiteHelper();
+        //helper.createPlayerTable();
+        helper.seePlayerTable();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
