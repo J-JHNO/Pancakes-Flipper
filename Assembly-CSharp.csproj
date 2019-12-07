@@ -64,6 +64,8 @@
     <Compile Include="Assets\Scripts\ContactManager.cs" />
     <Compile Include="Assets\Scripts\DemarrerJeu.cs" />
     <Compile Include="Assets\Scripts\Flip.cs" />
+    <Compile Include="Assets\Scripts\ListControler.cs" />
+    <Compile Include="Assets\Scripts\ListItemControler.cs" />
     <Compile Include="Assets\Scripts\LoadingScreen.cs" />
     <Compile Include="Assets\Scripts\LoadLevel.cs" />
     <Compile Include="Assets\Scripts\LogIn.cs" />

@@ -2,10 +2,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DataBank;
+using System.Collections.Generic;
 
 public class LoadLevel : MonoBehaviour {
     public string levelName = "Enter level name here";
-    
+    private SQLiteHelper helper;
+
+    void Start()
+    {
+        helper = new SQLiteHelper();
+        //helper.createPlayerTable();
+        //helper.seePlayerTable();
+    }
 
     public void Load()
     {
@@ -15,8 +24,25 @@ public class LoadLevel : MonoBehaviour {
         Transform infoLevel = gameObject.transform.parent.parent.Find("Info level");
 
         infoLevel.Find("Level name").GetComponent<Text>().text = levelName;
-        infoLevel.Find("Completed").GetComponent<Text>().text = "Non"; // Prendre info de la base de donnée
-        infoLevel.Find("Flips").GetComponent<Text>().text = "0"; // Prendre info de la base de donnée
+
+        List<int> scores = helper.getScores(int.Parse(levelName.Split(' ')[1]), Player.getName());
+        scores.Sort();
+        int minFlips = 0;
+        if (scores.Count > 0)
+        {
+            minFlips = scores[0];
+        }
+
+        infoLevel.Find("Flips").GetComponent<Text>().text = minFlips.ToString();
+
+        if (minFlips > 0)
+        {
+            infoLevel.Find("Completed").GetComponent<Text>().text = "Yes";
+        }
+        else
+        {
+            infoLevel.Find("Completed").GetComponent<Text>().text = "No";
+        }
 
         Play();
     }

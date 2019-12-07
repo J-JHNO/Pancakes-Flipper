@@ -16,7 +16,11 @@ public class LogIn : MonoBehaviour {
 
         helper = new SQLiteHelper();
         //helper.createPlayerTable();
-        helper.seePlayerTable();
+        //helper.seePlayerTable();
+
+        /*helper.createLevelTable(1);
+        helper.createLevelTable(2);
+        helper.createLevelTable(3);*/
 
     }
 	

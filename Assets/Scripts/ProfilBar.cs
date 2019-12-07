@@ -14,7 +14,7 @@ public class ProfilBar : MonoBehaviour {
     void Start () {
         helper = new SQLiteHelper();
         //helper.createPlayerTable();
-        helper.seePlayerTable();
+        //helper.seePlayerTable();
 
 
         pseudo = Player.getName();
@@ -23,7 +23,7 @@ public class ProfilBar : MonoBehaviour {
         coins = helper.getTotalPlayerFlips(Player.getName());
 
         gameObject.transform.Find("PancakeCoins").Find("Value").GetComponent<Text>().text = coins.ToString();
-
+        Debug.Log("coins :" + coins + " / DB :" + helper.getTotalPlayerFlips(Player.getName()));
     }
 	
 	// Update is called once per frame

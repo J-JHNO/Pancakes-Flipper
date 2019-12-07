@@ -7,10 +7,17 @@ public class Player : MonoBehaviour
 {
     private string playerName;
     private static Player instance = null;
+    private String[] friends;
+    private String[] invites;
 
     public Player()
     {
         playerName = "Player";
+    }
+
+    public Player(String p)
+    {
+        playerName = p;
     }
     
 

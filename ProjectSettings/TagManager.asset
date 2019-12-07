@@ -10,6 +10,8 @@ TagManager:
   - PlayButton
   - Purchase
   - Friend
+  - Invite
+  - FriendContainer
   layers:
   - Default
   - TransparentFX

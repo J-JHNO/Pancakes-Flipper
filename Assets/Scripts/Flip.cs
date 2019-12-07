@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using DataBank;
+
+using diag = System.Diagnostics;
+using System.Threading;
+using UnityEngine.SceneManagement;
 
 public class Flip : MonoBehaviour {
+    private int numLevel;
     private Score score;
+    private diag.Stopwatch stopWatch;
+    private SQLiteHelper helper;
 
     private int CompareYPos(GameObject a, GameObject b)
     {
@@ -19,7 +27,18 @@ public class Flip : MonoBehaviour {
 
     void Start()
     {
+        helper = new SQLiteHelper();
+        //helper.createPlayerTable();
+        //helper.seePlayerTable();
+
+        string nomLevel = SceneManager.GetActiveScene().name;
+        numLevel = int.Parse(nomLevel.Split(' ')[1]);
+
         score = (Score)GameObject.FindGameObjectWithTag("Tower").GetComponent("Score");
+        stopWatch = new diag.Stopwatch();
+
+        stopWatch.Start();
+        
     }
 
     /*void OnMouseDrag()
@@ -104,7 +123,15 @@ public class Flip : MonoBehaviour {
         GameObject victoryMessage = GameObject.FindGameObjectsWithTag("VictoryMessage")[0];
         ((VictoryMessage)victoryMessage.GetComponent("VictoryMessage")).setGagner(gagnerCalcul);
         
-        
+        if (gagnerCalcul)
+        {
+            stopWatch.Stop();
+
+            TimeSpan ts = stopWatch.Elapsed;
+            helper.addScore(numLevel, Player.getName(), score.flips, ts);
+
+            Debug.Log(score.flips + " / " + ts);
+        }
 
     }
 

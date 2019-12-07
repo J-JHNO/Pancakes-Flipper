@@ -11,7 +11,7 @@ public class ContactManager : MonoBehaviour {
     void Start () {
         helper = new SQLiteHelper();
         //helper.createPlayerTable();
-        helper.seePlayerTable();
+        //helper.seePlayerTable();
     }
 	
 	// Update is called once per frame
@@ -21,34 +21,49 @@ public class ContactManager : MonoBehaviour {
 
     public void ShowInvites()
     {
-        //Transform parent = gameObject.transform.parent;
-       // Transform content = parent.Find("Friends List").Find("Viewport").Find("Content");
-        GameObject[] childs = GameObject.FindGameObjectsWithTag("Friend");
-        //Transform test = childs[0].Find("Defier");
-        foreach (GameObject child in childs)
-        {
-            Transform defier = child.transform.Find("Defier");
-            defier.transform.transform.localScale = new Vector3(0, 0, 0);
-            Transform ajouter = child.transform.Find("Ajouter");
-            ajouter.transform.transform.localScale = new Vector3(1, 1, 1);
-        }
+        //ListItemControler liste = gameObject.transform.parent.Find("Friends List").Find("Friends").GetComponent<ListItemControler>();
+        ListItemControler liste = GameObject.FindGameObjectWithTag("FriendContainer").GetComponent<ListItemControler>();
+        liste.refreshInvite();
     }
 
     public void ShowFriends()
     {
-        //Transform parent = gameObject.transform.parent;
-        // Transform content = parent.Find("Friends List").Find("Viewport").Find("Content");
-        GameObject[] childs = GameObject.FindGameObjectsWithTag("Friend");
-        foreach (GameObject child in childs)
-        {
-            Transform defier = child.transform.Find("Defier");
-            defier.transform.transform.localScale = new Vector3(1, 1, 1);
-            Transform ajouter = child.transform.Find("Ajouter");
-            ajouter.transform.transform.localScale = new Vector3(0, 0, 0);
-        }
+
+        //ListItemControler liste = gameObject.transform.parent.Find("Friends List").Find("Friends").GetComponent<ListItemControler>();
+        ListItemControler liste = GameObject.FindGameObjectWithTag("FriendContainer").GetComponent<ListItemControler>();
+        liste.refreshFriends();
     }
 
     public void AddFriend()
+    {
+        Text pseudo = gameObject.transform.parent.Find("Pseudo").GetComponent<Text>();
+        helper.approveFriend(Player.getName(), pseudo.text);
+
+        ShowInvites();
+    }
+
+    public void DeclineInvite()
+    {
+        Text pseudo = gameObject.transform.parent.Find("Pseudo").GetComponent<Text>();
+        helper.declineFriend(Player.getName(), pseudo.text);
+
+        ShowInvites();
+    }
+
+    public void DeleteFriend()
+    {
+        Text pseudo = gameObject.transform.parent.Find("Pseudo").GetComponent<Text>();
+        helper.removeFriend(Player.getName(), pseudo.text);
+
+        ShowFriends();
+    }
+
+    public void ProvocFriend()
+    {
+
+    }
+
+    public void SendRequest()
     {
         string userName = gameObject.transform.parent.Find("InputField").Find("User name").GetComponent<Text>().text;
         // Debug.Log("test : " + userName);
@@ -56,10 +71,15 @@ public class ContactManager : MonoBehaviour {
 
         if (r)
         {
-            gameObject.transform.Find("User name").GetComponent<Text>().text = "";
+            gameObject.transform.parent.Find("InputField").Find("User name").GetComponent<Text>().text = "";
+            helper.addPlayerToWaiting(Player.getName(), userName);
+
+            gameObject.transform.parent.parent.parent.Find("Bottom").Find("Info invite").GetComponent<Text>().text = "Invite send !";
         }
         else
         {
+            gameObject.transform.parent.parent.parent.Find("Bottom").Find("Info invite").GetComponent<Text>().text = "This player doesn't exist";
+
             Debug.Log(userName + "Doesn't exists");
         }
     }
@@ -89,18 +109,15 @@ public class ContactManager : MonoBehaviour {
 
     public void validation()
     {
-        // helper.open();
         string userName = gameObject.transform.Find("User name").GetComponent<Text>().text;
         if (check())
         {
-            //helper.addPlayer(userName);
             gameObject.transform.Find("User name").GetComponent<Text>().text = "";
+            helper.addPlayerToWaiting(Player.getName(), userName);
         }
         else
         {
             Debug.Log(userName + "Doesn't exists");
         }
-        //helper.seePlayerTable();
-        //helper.close();
     }
 }

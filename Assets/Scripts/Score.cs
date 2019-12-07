@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using fuck = System.Diagnostics;
+using System;
+using System.Threading;
+
 public class Score : MonoBehaviour
 {
     private Vector3 position;
@@ -10,9 +14,29 @@ public class Score : MonoBehaviour
     public int flips = 0;
     public GUISkin labelSkin;
 
+
+
     void Start()
     {
         labelSkin = Resources.Load<GUISkin>("GUI_skin/Pancake_skin/Gui_skin_Pancake2");
+
+        /*Stopwatch stopWatch = new Stopwatch();
+        stopWatch.Start();
+        Thread.Sleep(10000);
+        stopWatch.Stop();
+        
+        TimeSpan ts = stopWatch.Elapsed;*/
+
+        //TimeSpan hi = new TimeSpan(2,3,4);
+        //ebug.Log(hi.Minutes);
+
+
+        //helper.createLevelTable(1);
+        //helper.addScore(1,"Boyan",100,ts);
+
+        //foreach(TimeSpan i in helper.getTimes(1, "Boyan")){
+        //	Debug.Log(i.ToString());
+        //}
     }
 
     void Awake()
